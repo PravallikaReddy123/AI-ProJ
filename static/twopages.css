@@ -1,0 +1,219 @@
+.bg-container {
+    background-image: url("loginimage.jpeg");
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.main-heading1 {
+    font-family: "Roboto";
+    padding-right: 85px;
+    padding-bottom: 50px;
+    font-weight: bolder;
+}
+.button {
+    background-color:rgb(111,78,55);
+    border:none;
+    border-radius:18px;
+    color:white;
+    height:65px;
+    width:135px;
+    font-weight:bold;
+    font-size:15px;
+    cursor:pointer;
+    transition:box-shadow 0.3s;
+}
+.btn2{
+    padding-right: 75px;
+}
+.button:hover {
+    box-shadow: 10px 10px 10px rgba(0,0,0,0.5);
+}
+.button:active {
+    opacity: 0.5;
+}
+.navbar-img2{
+    height:90px;
+    width:90px;
+    padding:10px;
+
+}
+
+.navbar1{
+    background-color: rgb(111,78,55);
+}
+
+.nav-link{
+    font-size:28px;
+}
+
+.navbar-nav a{
+   margin:0 15px;
+}
+
+.login-button {
+    background-color: white;
+    border-color: rgb(111,78,55);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    color: rgb(111,78,55);
+    font-weight: bold;
+    height: 50px;
+    width: 110px;
+    cursor:pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.login-button:hover {
+    background-color: rgb(111,78,55);
+    border-color: white;
+    border-style: solid;
+    border-width: 3px;
+    color: white;
+}
+
+.login-button:active {
+    opacity: 0.6;
+}
+
+.acc-button {
+    background-color: white;
+    border-color: rgb(111,78,55);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    color: rgb(111,78,55);
+    font-weight: bold;
+    height: 50px;
+    width: 250px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.acc-button:hover {
+    background-color: rgb(111,78,55);
+    border-color: white;
+    border-style: solid;
+    border-width: 3px;
+    color: white;
+}
+
+.acc-button:active {
+    opacity: 0.6;
+}
+
+body{
+    background-image: url("download3.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width:100vw;
+    height: 100vh;
+}
+
+.hero-section{
+    background-color: rgb(245,222,179);
+    color:black;
+    text-align:center;
+    padding:60px 20px;
+}
+.hero-content{
+    margin:0 auto;
+    width:100vw;
+}
+.hero-section h1{
+    font-weight: bold;
+    margin-bottom:20px;
+    font-size: 50px;
+    font-family:"Roboto" ;
+}
+.hero-section p{
+    font-size:30px;
+    margin-bottom:30px;
+}
+.hero-btn{
+    background-color:rgb(255,251,232);
+    color:rgb(111,78,55);
+    border-style: solid;
+    border-width: 3px;
+    border-color: rgb(111,78,55);
+    padding:10px 20px;
+    border-radius:5px;
+    text-decoration:none;
+    font-weight: bold;
+    font-size: 20px;
+    height: 60px;
+    width: 250px;
+}
+
+.hero-btn:hover {
+    background-color: rgb(111,78,55);
+    color: white;
+}
+
+.hero-btn:active {
+    opacity: 0.6;
+}
+.features-section {
+    padding: 60px 20px;
+    background-color:rgb(210,180,140);
+    text-align: center;
+  }
+  
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .features-section h2{
+    font-weight: bolder;
+    font-size:45px;
+    padding-bottom:25px;
+  }
+  .feature-box {
+    background-color: rgb(255,251,232);
+    width: 30%;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .feature-box h3 {
+    color:rgb(111,78,55);
+    font-weight: bold;
+  }
+  
+  .feature-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    border-width: 3px;
+    text-decoration: none;
+    font-size:20px;
+    font-weight: bold;
+    color: white;
+    background-color:rgb(111,78,55);
+  }
+
+  .feature-btn:hover {
+    color: rgb(111,78,55);
+    background-color:  white;
+    border-style: solid;
+    border-color:rgb(111,78,55);
+  }
+
+  .features-section p{
+    font-size:19px;
+  }
+
+  footer {
+    background-color:rgb(111,78,55);
+    color:rgb(255,251,232);
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-size: 22px;
+  }

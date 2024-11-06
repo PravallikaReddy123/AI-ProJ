@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Recorder</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: #000; /* Default background */
+        }
+        .left-div {
+            background-color: #f0f0f0;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end; /* Buttons at the bottom */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .right-div {
+            background-color: black;
+            width: 50%;
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        #stopBtn {
+            margin-top: 20px;
+        }
+        .user-message {
+            text-align: right;
+            margin-bottom: 10px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 10px;
+            color: black;
+            max-width: 80%;
+            margin-left: auto;
+        }
+        .bot-message {
+            text-align: left;
+            margin-bottom: 10px;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        /* Overlay Layer for Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8); /* Dark overlay background */
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: flex-end; /* Positioned near the bottom */
+            z-index: 9999; /* On top of everything */
+        }
+
+        /* Lottie Animation Styling */
+        .loading-animation {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 5%; /* Position slightly above the very bottom */
+        }
+
+        /* Stylish Scrollbar */
+        .right-div::-webkit-scrollbar {
+            width: 8px;
+        }
+        .right-div::-webkit-scrollbar-thumb {
+            background-color: #666;
+            border-radius: 10px;
+        }
+        .right-div::-webkit-scrollbar-track {
+            background-color: #111;
+        }
+    </style>
+</head>
+<body>
+    <div class="left-div">
+        <button id="intro">Start Chat</button>
+        <button id="startBtn">Start Recording</button>
+        <button id="stopBtn" disabled>Stop Recording</button>
+    </div>
+    
+    <div class="right-div" id="chatBox"></div>
+
+    <!-- Overlay container for animation -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-animation" id="lottieAnimation"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+
+        // Play the introduction audio
+        document.getElementById('intro').onclick = () => {
+            const audio = new Audio('/static/intro.wav');
+            audio.play().catch(error => {
+                console.error('Error playing intro audio:', error);
+            });
+        };
+
+        // Start recording audio
+        document.getElementById('startBtn').onclick = () => {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    if (mediaRecorder && mediaRecorder.state === 'recording') {
+                        mediaRecorder.stop();
+                    }
+                    audioChunks = [];  // Clear the previous audio chunks
+
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.ondataavailable = event => {
+                        audioChunks.push(event.data);
+                    };
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const formData = new FormData();
+                        formData.append('file', audioBlob, 'recording.wav');
+
+                        // Show loading overlay and animation
+                        document.getElementById('loadingOverlay').style.display = 'flex';
+
+                        fetch('/chat/upload', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Hide loading animation and overlay
+                            document.getElementById('loadingOverlay').style.display = 'none';
+
+                            if (data.message && data.response) {
+                                // Display user input and bot response in chatbox
+                                displayMessage(data.message, 'user');
+                                displayMessage(data.response, 'bot');
+
+                                // Play the response audio
+                                if (data.audio_url) {
+                                    const audio = new Audio(`${data.audio_url}?t=${new Date().getTime()}`);
+                                    audio.play().catch(error => {
+                                        console.error('Error playing output audio:', error);
+                                    });
+                                }
+                            } else if (data.error) {
+                                if (data.error === 'No voice detected') {
+                                    displayMessage('No voice detected', 'bot');
+                                }
+                                console.error('Error:', data.error);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            // Hide loading animation and overlay in case of error
+                            document.getElementById('loadingOverlay').style.display = 'none';
+                        });
+                    };
+                    mediaRecorder.start();
+                    document.getElementById('startBtn').disabled = true;
+                    document.getElementById('stopBtn').disabled = false;
+                });
+        };
+
+        // Stop recording and process audio
+        document.getElementById('stopBtn').onclick = () => {
+            if (mediaRecorder) {
+                mediaRecorder.stop();
+            }
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = true;
+        };
+
+        // Function to display messages in the chatbox
+        function displayMessage(message, type) {
+            const chatBox = document.getElementById('chatBox');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add(type === 'user' ? 'user-message' : 'bot-message');
+            messageElement.textContent = message;
+            chatBox.appendChild(messageElement);
+
+            // Scroll to the bottom of the chat box
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Initialize Lottie animation
+        var animation = lottie.loadAnimation({
+            container: document.getElementById('lottieAnimation'), // The container for the animation
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'static/Animation - 1730055711791.json' // Path to the JSON animation file
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+body.dark-theme {
+    background: linear-gradient(145deg, #1f1f1f, #101010);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+.navbar {
+    background-color: #151515;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.neon-btn {
+    background: linear-gradient(45deg, #0f0, #0ff, #f0f, #ff0);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    transition: 0.3s;
+    animation: glow 1.5s infinite alternate;
+}
+
+.neon-btn:hover {
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6);
+    transform: scale(1.05);
+}
+
+.hero-section {
+    text-align: center;
+    padding: 100px 0;
+    background: linear-gradient(135deg, #131313, #1a1a1a);
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    color: #fff;
+}
+
+.hero-btn {
+    margin-top: 20px;
+}
+
+.glowing-text {
+    color: #0ff;
+    text-shadow: 0 0 8px #00ffff;
+    animation: neonGlow 3s infinite;
+}
+
+.feature-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 5px #0f0, 0 0 10px #0ff;
+    }
+    to {
+        box-shadow: 0 0 20px #0f0, 0 0 40px #0ff;
+    }
+}
+
+@keyframes neonGlow {
+    0%, 100% {
+        text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    }
+    50% {
+        text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
+    }
+}

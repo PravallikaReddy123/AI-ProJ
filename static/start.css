@@ -1,0 +1,33 @@
+.bg-container {
+    background-image: url("loginimage.jpeg");
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.main-heading1 {
+    font-family: "Roboto";
+    padding-right: 85px;
+    padding-bottom: 50px;
+    font-weight: bolder;
+}
+.button {
+    background-color:rgb(111,78,55);
+    border:none;
+    border-radius:18px;
+    color:white;
+    height:65px;
+    width:135px;
+    font-weight:bold;
+    font-size:15px;
+    cursor:pointer;
+    transition:box-shadow 0.3s;
+}
+.btn2{
+    padding-right: 75px;
+}
+.button:hover {
+    box-shadow: 10px 10px 10px rgba(0,0,0,0.5);
+}
+.button:active {
+    opacity: 0.5;
+}

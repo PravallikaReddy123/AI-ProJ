@@ -1,0 +1,11 @@
+Flask
+flask-cors
+python-pptx
+Pillow
+google-generativeai
+groq
+deepgram
+
+
+
+

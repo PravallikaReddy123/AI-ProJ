@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Discussion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .start-btn{
+    width:200px;
+}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000000; /* Black background */
+            color: #ffffff; /* White text with glow */
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 9999;
+        }
+
+        .overlay-content {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+        }
+
+        .overlay-content input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .overlay-content button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .overlay-content button:hover {
+            background-color: #45a049;
+        }
+
+        .chat-box {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            position: relative;
+        }
+
+        .chat-content {
+            width: 100%; /* Initially full width */
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s ease; /* Smooth transition for shrinking */
+        }
+
+        .chat-content.shrunk {
+            width: 75%; /* Shrink to 75% when suggestions are shown */
+        }
+
+        .chat-history {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: #1a1a1a; /* Darkest grey for chat background */
+        }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            color: #ffffff;
+            max-width: 70%;
+        }
+
+        .message.user {
+            background-color: #2b2b2b; /* Dark grey for user */
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .message.ben, .message.tony, .message.steeve {
+            background-color: #141414; /* Even darker grey for others */
+            margin-right: auto;
+        }
+
+        .message strong {
+            color: #ffffff; /* Glowing white */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        }
+
+        .message-input {
+            display: flex;
+            padding: 20px;
+            background-color: #1a1a1a; /* Dark grey input area */
+            border-top: 1px solid #333333;
+        }
+
+        input[type="text"] {
+            width: 85%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #2b2b2b; /* Dark grey input */
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 15%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .suggestion-bar {
+            width: 25%; /* Suggestion bar takes 25% of the width */
+            background-color: #2b2b2b; /* Dark grey for suggestion bar */
+            padding: 20px;
+            border-left: 1px solid #333333;
+            overflow-y: auto;
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            display: none; /* Hidden by default */
+        }
+
+        .suggestion-bar h4 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        #suggestions {
+            color: #ffffff;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: transparent;
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .suggestions-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .suggestions-toggle:hover {
+            background-color: #0056b3;
+        }
+
+       
+    </style>
+</head>
+<body>
+
+    <!-- Topic Input Overlay -->
+    <div class="overlay" id="overlay">
+        <div class="overlay-content">
+            <h2>Enter Topic for Group Discussion</h2>
+            <input type="text" id="topic-input" placeholder="Enter discussion topic here">
+            <button id="start-btn" class="start-btn">Start Discussion</button>
+        </div>
+    </div>
+
+    <div class="chat-box">
+        <!-- Chat content -->
+        <div class="chat-content" id="chat-content">
+            <div class="chat-history" id="chat-history">
+                <!-- Initial Messages Displayed Here -->
+                <div class="message ben"><strong>Ben:</strong> {{ ben_output }}</div>
+                <div class="message tony"><strong>Tony:</strong> {{ tony_output }}</div>
+                <div class="message steeve"><strong>Steeve:</strong> {{ steeve_output }}</div>
+            </div>
+
+            <div class="message-input">
+                <input type="text" id="user_input" placeholder="Type your message here">
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+
+        <!-- Suggestion Bar -->
+        <div class="suggestion-bar" id="suggestion-bar">
+            <button class="close-btn" id="close-btn">&times;</button>
+            <h4>Suggestions</h4>
+            <div id="suggestions">
+                <!-- Suggestions, score, and reasons will be displayed here -->
+                <p id="suggestion-text"></p>
+            </div>
+        </div>
+
+        <!-- Suggestions Toggle Button -->
+        <button class="suggestions-toggle" id="suggestions-toggle">Suggestions</button>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Show the suggestion bar and shrink the chat content
+            $('#suggestions-toggle').on('click', function() {
+                $('#suggestion-bar').show();
+                $('#chat-content').addClass('shrunk');
+                $(this).hide();
+            });
+
+            $('#close-btn').on('click', function() {
+                $('#suggestion-bar').hide();
+                $('#chat-content').removeClass('shrunk');
+                $('#suggestions-toggle').show();
+            });
+
+            // Handle start button click
+            $('#start-btn').on('click', function() {
+                var topic = $('#topic-input').val();
+                
+                if (topic.trim() === '') {
+                    alert('Please enter a topic');
+                    return;
+                }
+
+                // Hide overlay
+                $('#overlay').hide();
+
+                // Send topic to server and start discussion
+                $.ajax({
+                    type: 'POST',
+                    url: '/group/start_discussion',
+                    data: { topic: topic },
+                    success: function(response) {
+                        $('#chat-history').html(`
+                            <div class="message ben"><strong>Ben:</strong> ${response.ben_output}</div>
+                            <div class="message tony"><strong>Tony:</strong> ${response.tony_output}</div>
+                            <div class="message steeve"><strong>Steeve:</strong> ${response.steeve_output}</div>
+                        `);
+                    },
+                    error: function(error) {
+                        alert('Error starting discussion');
+                    }
+                });
+            });
+
+            // Send user input message
+            $('#send-btn').on('click', function() {
+                var user_input = $('#user_input').val();
+
+                if (user_input.trim() === '') {
+                    alert('Please enter a message');
+                    return;
+                }
+
+                $('#send-btn').prop('disabled', true).text('Sending...');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/group/get_response',
+                    data: { user_input: user_input },
+                    success: function(response) {
+                        $('#chat-history').append(`
+                            <div class="message user"><strong>You:</strong> ${user_input}</div>
+                            <div class="message ben"><strong>Ben:</strong> ${response.ben_output}</div>
+                            <div class="message tony"><strong>Tony:</strong> ${response.tony_output}</div>
+                            <div class="message steeve"><strong>Steeve:</strong> ${response.steeve_output}</div>
+                        `);
+                        $('#suggestion-text').html(response.user_suggestion); // Set suggestion text
+                        $('#user_input').val('');
+                        $('#chat-history').scrollTop($('#chat-history')[0].scrollHeight);
+                        $('#send-btn').prop('disabled', false).text('Send');
+                    },
+                    error: function(error) {
+                        alert('Error sending message');
+                        $('#send-btn').prop('disabled', false).text('Send');
+                    }
+                });
+            });
+
+            $('#user_input').on('keypress', function(e) {
+                if (e.which === 13) {
+                    $('#send-btn').click();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

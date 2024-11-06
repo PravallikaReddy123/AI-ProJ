@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Communication Platform</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/home2.css">
+    <style>
+       @keyframes gradient-animation {
+        0% {
+            background-image: linear-gradient(135deg, #ffffff, #f0f0f0);
+        }
+        50% {
+            background-image: linear-gradient(135deg, #e0f7fa, #ffecb3);
+        }
+        100% {
+            background-image: linear-gradient(135deg, #ffffff, #f0f0f0);
+        }
+    }
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        .hero-content{
+            align-self: center;
+        }
+        video{
+            width:70%;
+            margin-top: 100px;
+        }
+        .navbar1 {
+            background-color: #222;
+            position:fixed;
+            top:0;
+            width:100%;
+            z-index: 1000;
+
+        }
+        .acc-button  {
+            background: black;
+            color: white;
+            border: solid;
+            border-color: white;
+            border-width: 3px;
+            border-radius: 8px;
+            padding: 8px 16px;
+            transition: background 0.3s ease;
+        }
+        .login-button{
+            background:white;
+            color: black;
+            border: solid;
+            border-radius: 8px;
+            padding: 8px 16px;
+            transition: background 0.3s ease;
+        }
+        .acc-button:hover {
+            background: white;
+            color: black;
+            transform: scale(1.05);
+        }
+        .login-button:hover {
+            background: black;
+            color: white;
+            transform: scale(1.05); 
+        }
+        .hero-section {
+            background-color: #282828;
+            text-align: center;
+            padding:40px;
+            position: relative;
+            display:flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .hero-btn {
+            background-color: #17a2b8;
+            border: none;
+            padding: 12px 24px;
+            color: #fff;
+            font-size: 18px;
+            transition: background 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .hero-btn:hover {
+            background-color: #138496;
+           
+        }
+        .features-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .features-section h2 {
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+.feature-box {
+    background-image: linear-gradient(135deg, #ffffff, #f0f0f0);
+    color: #222;
+    padding: 40px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    animation: gradient-animation 5s ease infinite;
+}
+
+       
+ .feature-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+    background-color: #e0f7fa; /* Light teal on hover */
+    color: #004d40; /* Darker text for contrast */
+}
+        .feature-btn {
+            color: #17a2b8;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .feature-btn:hover {
+    color: #fff; /* Change text color to white on hover */
+    background-color: #007bff; /* Change background to blue */
+    border-radius: 8px;
+    padding: 10px;
+}
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #222;
+            color: #ccc;
+        }
+        .navbar-img2{
+            height:65px;
+        width:65px;
+    padding:10px;
+
+    border-radius: 50%;
+        }
+        .container1{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 40%;
+        }
+        .voice-ai-container{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+        }
+        .voice-ai-inner-container{
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .voice-ai-container-para{
+            text-align: center;
+        }
+        .voice-agent-api-whole-container{
+            display: flex;
+            width: 100%;
+            padding: 40px;
+            justify-content: space-between;
+        }
+        .voice-agent-api-left-container{
+            display: flex;
+            width: 65%;
+            border:2px #333333 solid;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        .voice-agent-api-left-container-image{
+            width: 50%;
+
+        }
+        .voice-agent-api-left-container-para{
+            align-self: center;
+            text-align: center;
+        }
+        .voice-agent-api-right-container{
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            border:2px #333333 solid;
+            padding-left: 30px;
+            padding-right: 30px; 
+            padding-top: 30px;
+            border-radius: 10px;
+            justify-content: space-between;
+        }
+        .voice-agent-api-right-container:hover{
+            border: 2px white solid;
+        }
+        
+        .voice-agent-api-right-container-image{
+            width:100%;
+        }
+        .voice-agent-api-left-container:hover{
+            border: 2px white solid;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar1 ">
+        <a class="navbar-brand" href="#"><img src="https://i.pinimg.com/736x/56/8a/f2/568af2bf861bcebacb310dc24840b4e3.jpg" class="navbar-img2"/></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav mr-auto container1">
+                <a class="nav-link active" href="#">Home</a>
+                <a class="nav-link" href="#features">Features</a>
+                <a class="nav-link" href="https://www.fluentu.com/blog/english/learn-english-magazine/" target="_blank">Resources</a>
+                <a class="nav-link" href="#" >Profile</a>
+                <a class="nav-link" href="#followus">About Us</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <a class="nav-link" href="#"><button class="acc-button">Create Account</button></a>
+                <a class="nav-link" href="#"><button class="login-button">Login</button></a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Master English Communication with AI</h1>
+            <p>Join group discussions, participate in debates, and practice one-on-one conversations with AI-driven feedback.</p>
+            <button class="hero-btn" onclick="scrollToFeatures()">Explore Features</button>
+        </div>
+        <div>
+            <video src="https://www.datocms-assets.com/96965/1719003476-homepage-hero.mp4" autoplay muted loop>
+
+            </video>
+        </div>
+    </section>
+<div class="voice-ai-container">
+    <div class="voice-ai-inner-container">
+        <h1>Voice AI foundations</h1>
+        <p class="voice-ai-container-para">Our suite of voice AI tools is designed to transform how you interact with voice data, offering powerful APIs and models to unlock deeper insights and build seamless voice experiences.</p>
+    </div>
+
+</div>
+<div class="voice-agent-api-whole-container">
+<div class="voice-agent-api-left-container">
+<p class="voice-agent-api-left-container-para">A unified voice-to-voice API that enables natural-sounding conversations between humans and machined.</p>
+<img src="https://deepgram.com/_next/image?url=https%3A%2F%2Fwww.datocms-assets.com%2F96965%2F1727711904-voice-agent-api-home.png&w=1920&q=75" class="voice-agent-api-left-container-image"/>
+</div>
+<div class="voice-agent-api-right-container">
+<p class="voice-agent-api-left-container-para">Transcribe speech with unmatched accuracy,speed and cost.</p>
+<img src="https://deepgram.com/_next/image?url=https%3A%2F%2Fwww.datocms-assets.com%2F96965%2F1727727188-stt-home.png&w=1920&q=75" class="voice-agent-api-right-container-image"/>
+</div>
+</div>
+    <section id="features" class="features-section">
+        <h2>Platform Features</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-box">
+                        <h3>Group Discussions</h3>
+                        <p>Join AI-moderated group discussions to enhance your communication skills.</p>
+                        <a href="/group" class="feature-btn">Join Discussion</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-box">
+                        <h3>1:1 Conversations</h3>
+                        <p>Practice one-on-one conversations with AI or other users in real-time.</p>
+                        <a href="/chat" class="feature-btn">Start Conversation</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-box">
+                        <h3>Slide Summarizer</h3>
+                        <p>Get quick summaries of yoiur presentation slides in seconds!</p>
+                        <a href="/slide" class="feature-btn">Slide</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="followus">
+        <p>&copy; 2024 AI Communication Platform | Designed with 💡 by our Team</p>
+
+    </footer>
+
+    <script>
+        function scrollToFeatures() {
+            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
